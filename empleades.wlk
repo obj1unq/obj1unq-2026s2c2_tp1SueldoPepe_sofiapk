@@ -64,7 +64,7 @@ object moria {
 object roque {
   const sueldoNeto = 28000
   var bonoPorResultados = montoFijo
-  const adicional = 9000
+  const adicional = 9000 // magic number
 
   // getters
   method sueldoNeto() = sueldoNeto

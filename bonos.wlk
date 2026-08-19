@@ -27,11 +27,11 @@ object ajuste {
 }
 
 object demagógico {
-  const montoPorNetoMínimo = 500 // magic number
-  const montoPorNetoMáximo = 300 // magic number
+  const montoPorNetoMín = 500 // magic number
+  const montoPorNetoMáx = 300 // magic number
 
   method importe(empleade){
-    return if (empleade.sueldoNeto() < 18000 ) montoPorNetoMínimo else montoPorNetoMáximo
+    return if (empleade.sueldoNeto() < 18000 ) montoPorNetoMín else montoPorNetoMáx
   }
 }
 
