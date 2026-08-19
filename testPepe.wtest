@@ -1,5 +1,8 @@
-import pepe.*
+import empleades.*
+import bonos.*
+import categorias.*
 
+// PARA IR PRACTICANDO!!
 describe "Sueldo Pepe" {
 	
 	test "Pepe con $20.800 de sueldo" {
@@ -43,5 +46,33 @@ describe "Sueldo Moria" {
   test "Moria con $26.000 de sueldo" {
 	moria.categoría(cadete)
 	assert.equals(26000, moria.sueldoNeto())
+  }
+}
+
+describe "Sueldo Pepe, Ernesto y Roque" {
+  test "Pepe con $11.500 de sueldo" {
+	medioTiempo.categoríaBase(cadete)
+	pepe.categoría(medioTiempo)
+	pepe.bonoPorResultados(porcentaje)
+	pepe.bonoPorPresentismo(demagógico)
+	pepe.ausencias(1)
+	assert.equals(11500, pepe.sueldo())
+  }
+  
+  test "Roque con $37.800 de sueldo" {
+	roque.bonoPorResultados(montoFijo)
+	assert.equals(37800, roque.sueldo())
+  }
+
+  test "Ernesto con $10.100 de sueldo" {
+	medioTiempo.categoríaBase(cadete)
+	pepe.categoría(medioTiempo)
+	pepe.bonoPorResultados(porcentaje)
+	pepe.bonoPorPresentismo(demagógico)
+	pepe.ausencias(1)
+	assert.equals(11500, pepe.sueldo())
+	ernesto.compañero(pepe)
+	ernesto.bonoPorPresentismo(ajuste)
+	assert.equals(10100, ernesto.sueldo())
   }
 }
