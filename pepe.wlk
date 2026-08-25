@@ -1,18 +1,19 @@
 object pepe {
-	var categoría = cadete
-    var bonoPorPresentismo = montoFijo
-    var bonoPorResultados = normal
-    var faltas = 0 // acumulador
+  var categoría = cadete
+  var bonoPorPresentismo = montoFijo
+  var bonoPorResultados = normal
+  var ausencias = 0 // acumulador
 
     // getters
     //method categoría() = categoría
-    method bonoPorResultados() = bonoPorResultados
-    method bonoPorPresentismo() = bonoPorPresentismo
+    //method bonoPorResultados() = bonoPorResultados
+    //method bonoPorPresentismo() = bonoPorPresentismo
+    //method ausencias() = ausencias
 
     // setters
-    //method categoría(_categoría) {
-    //  categoría = _categoría
-    //}
+    method categoría(_categoría) {
+      categoría = _categoría
+    }
 
     method bonoPorResultados(_bonoPorResultados) {
       bonoPorResultados = _bonoPorResultados
@@ -21,46 +22,111 @@ object pepe {
     method bonoPorPresentismo(_bonoPorPresentismo) {
       bonoPorPresentismo = _bonoPorPresentismo
     }
-
-    method sueldo() = self.sueldoNeto() + self.bonoPorResultados() + self.bonoPorPresentismo()
-
-    method sueldoNeto() {
-        //
+    
+    method ausencias(_ausencias) {
+      ausencias = _ausencias
     }
 
-    method ausencias() = ausencias
+    method sueldo() = self.sueldoNeto() + bonoPorResultados.importe(self) + bonoPorPresentismo.importe(self)
+
+    method sueldoNeto() = categoría.neto()
 }
 
+// Categorías
+object gerente {
+  method neto() = 15000
+}
+
+object cadete {
+  method neto() = 20000
+}
+
+object vendedor {
+  var hayVentas = true
+  const porcentaje = 0.25 // magic number, es el 25%
+  const montoBasePorMuchasVentas = 16000 // magic number
+
+  method neto() {
+    return if (hayVentas) montoBasePorMuchasVentas * porcentaje else montoBasePorMuchasVentas
+  }
+
+  method activarAumentoPorMuchasVentas() {
+    hayVentas = true
+  }
+
+  method desactivarAumentoPorMuchasVentas() {
+    hayVentas = false
+  }
+}
+
+object medioTiempo {
+  /*
+  Este es un modificador sobre otra categoría, que se asigna enviando el mensaje medioTiempo.categoriaBase(categoria). 
+  Indica que la persona trabaja medio tiempo, por lo tanto su neto es la mitad (dividir por dos) de lo que indica la categoría base.
+  P.ej. si definimos medioTiempo.categoriaBase(gerente), entonces el neto de medioTiempo es 7500 (la mitad de 15000).
+  */
+  var categoríaBase = gerente // puede ser cualquier otra categoría
+
+  // setter
+  method categoríaBase(_categoríaBase) {
+    categoríaBase = _categoríaBase
+  }
+
+  method neto() = categoríaBase.neto() / 2
+}
 
 // Bono por Presentismo
-object normal {
-
+object normal {// $2000 pesos si la persona a quien se aplica no faltó nunca, $1000 si faltó sólo un día, $0 en cualquier otro caso.
+  const montoPorAsistenciaCompleta = 2000 // magic number
+  const montoPorUnaSolaFalta = 1000 // magic number
+  
+  method importe(empleade) {
+    return
+    if (empleade.ausencias() == 0){
+      montoPorAsistenciaCompleta
+    } else if (empleade.ausencias() == 1 ){
+      montoPorUnaSolaFalta
+    } else {
+      empleade.nuloBP() // devuelve 0
+    }
+  }
 }
 
 object ajuste {
-  
+  // $100 pesos si el empleado no faltó nunca, $0 en cualquier otro caso.
+  const montoPorAsistenciaCompleta = 100 // magic number
+
+  method importe(empleade){
+    return if (empleade.ausencias() == 0 ) montoPorAsistenciaCompleta else empleade.nuloBP()
+  }
 }
 
 object demagógico {
-  
+  // $500 pesos si el neto es menor a 18000, $300 en caso contrario. Para este bono no importa cuántas veces faltó el emplado.
+  const montoPorNetoMínimo = 500 // magic number
+  const montoPorNetoMáximo = 300 // magic number
+
+  method importe(empleade){
+    return if (empleade.sueldoNeto() < 18000 ) montoPorNetoMínimo else montoPorNetoMáximo
+  }
 }
 
 object nuloBP {
-  
+  method importe(empleade) = 0
 }
 
 // Bono por Resultados
-
-
 object porcentaje {
-    
+  const porcentaje = 0.1 // magic number, es el 10%
+
+  method importe(empleade) = empleade.sueldoNeto() * porcentaje
 }
 
 object montoFijo {
-  
+  method importe(empleade) = 800
 }
 
 object nuloBR {
-  
+  method importe(empleade) = 0
 }
 
