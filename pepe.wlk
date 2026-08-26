@@ -1,3 +1,4 @@
+// PEPE
 object pepe {
   var categoría = cadete
   var bonoPorPresentismo = montoFijo
@@ -29,7 +30,7 @@ object pepe {
 
     method sueldo() = self.sueldoNeto() + bonoPorResultados.importe(self) + bonoPorPresentismo.importe(self)
 
-    method sueldoNeto() = categoría.neto()
+    method sueldoNeto() = self.categoría().neto()
 }
 
 // Categorías
@@ -41,7 +42,7 @@ object cadete {
   method neto() = 20000
 }
 
-object vendedor {
+object vendedore {
   var hayVentas = true
   const porcentaje = 1.25 // magic number, es el 25%
   const montoBasePorMuchasVentas = 16000 // magic number
@@ -129,3 +130,48 @@ object montoFijo {
 object bonoNulo {
   method importe(empleade) = 0
 }
+
+// MORIA
+object moria {
+  var bonoPorResultados = montoFijo
+  var categoría = vendedore
+  const porcentaje = 1.3 // magic number, 30%
+
+  // getters
+    method categoría() = categoría
+    method bonoPorResultados() = bonoPorResultados
+
+  // setters
+  method categoría(_categoría) {
+    categoría = _categoría
+  }
+
+  method bonoPorResultados(_bonoPorResultados) {
+    bonoPorResultados = _bonoPorResultados
+  }
+
+  method sueldo() = self.sueldoNeto() + bonoPorResultados.importe(self)
+
+  method sueldoNeto() = self.categoría().neto() * porcentaje
+}
+
+// ROQUE
+object roque {
+  
+}
+/*
+Roque, que en lugar de asignársele una categoría, se establece un neto de 28000 pesos.
+El sueldo se calcula como neto + bono por resultados + 9000 pesos.
+Para el bono por resultados, se usan las mismas opciones que para Pepe.
+*/
+
+// ERNESTO
+object ernesto {
+  var compañero = roque
+}
+
+/*
+Ernesto, que trabaja junto con un compañero, que puede cambiar. El neto de Ernesto es igual al de su compañero.
+Su sueldo se calcula como neto + bono por presentismo.
+Para el bono por presentismo, usar las mismas opciones que para Pepe. Se sabe que Ernesto no falta nunca.
+*/
