@@ -5,10 +5,10 @@ object pepe {
   var ausencias = 0 // acumulador
 
     // getters
-    //method categoría() = categoría
-    //method bonoPorResultados() = bonoPorResultados
-    //method bonoPorPresentismo() = bonoPorPresentismo
-    //method ausencias() = ausencias
+    method categoría() = categoría
+    method bonoPorResultados() = bonoPorResultados
+    method bonoPorPresentismo() = bonoPorPresentismo
+    method ausencias() = ausencias
 
     // setters
     method categoría(_categoría) {
@@ -43,7 +43,7 @@ object cadete {
 
 object vendedor {
   var hayVentas = true
-  const porcentaje = 0.25 // magic number, es el 25%
+  const porcentaje = 1.25 // magic number, es el 25%
   const montoBasePorMuchasVentas = 16000 // magic number
 
   method neto() {
@@ -60,11 +60,6 @@ object vendedor {
 }
 
 object medioTiempo {
-  /*
-  Este es un modificador sobre otra categoría, que se asigna enviando el mensaje medioTiempo.categoriaBase(categoria). 
-  Indica que la persona trabaja medio tiempo, por lo tanto su neto es la mitad (dividir por dos) de lo que indica la categoría base.
-  P.ej. si definimos medioTiempo.categoriaBase(gerente), entonces el neto de medioTiempo es 7500 (la mitad de 15000).
-  */
   var categoríaBase = gerente // puede ser cualquier otra categoría
 
   // setter
@@ -87,7 +82,7 @@ object normal {// $2000 pesos si la persona a quien se aplica no faltó nunca, $
     } else if (empleade.ausencias() == 1 ){
       montoPorUnaSolaFalta
     } else {
-      empleade.nuloBP() // devuelve 0
+      0 // bonoNulo
     }
   }
 }
@@ -97,7 +92,7 @@ object ajuste {
   const montoPorAsistenciaCompleta = 100 // magic number
 
   method importe(empleade){
-    return if (empleade.ausencias() == 0 ) montoPorAsistenciaCompleta else empleade.nuloBP()
+    return if (empleade.ausencias() == 0 ) montoPorAsistenciaCompleta else 0
   }
 }
 
@@ -111,9 +106,9 @@ object demagógico {
   }
 }
 
-object nuloBP {
-  method importe(empleade) = 0
-}
+//object nuloBP {
+//  method importe(empleade) = 0
+//}
 
 // Bono por Resultados
 object porcentaje {
@@ -126,7 +121,11 @@ object montoFijo {
   method importe(empleade) = 800
 }
 
-object nuloBR {
+//object nuloBR {
+//  method importe(empleade) = 0
+//}
+
+// Aplica tanto para BP como para BR
+object bonoNulo {
   method importe(empleade) = 0
 }
-
