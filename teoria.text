@@ -1,0 +1,41 @@
+Describir los polimorfismos en tu solución, detallando:
+    - el tipo de los objetos polimórficos
+    - los mensajes que componen ese tipo
+    - los emisores de los mensajes polimórficos
+
+    Tipo: EmpleadeConAusencias
+    Mensajes que entiende: ausencias(), sueldoNeto(), sueldo().
+    Emisores de los mensajes: los objetos normal y ajuste ( por medio del mensaje ausencias() ), el objeto demagógico ( por medio del mensaje sueldoNeto() ) | el tipo BonoPorPresentismo
+
+    Tipo: Empleade
+    Mensajes que entiende: sueldoNeto(), sueldo().
+    Emisores de los mensajes: el objeto porcentaje ( por medio del menasaje sueldoNeto() ) | el tipo BonoPorResultados y el tipo EmpledeConAusencias
+
+    Tipo: BonoPorResultados
+    Mensajes que entiende: importe(empleade).
+    Emisores de los mensajes: los objetos pepe, moria y roque.
+
+    Tipo: BonoPorPresentismo
+    Mensajes que entiende: importe(empleade).
+    Emisores de los mensajes: los objetos pepe y ernesto.
+
+    Tipo: Categoría
+    Mensaje que entiende: neto()
+    Emisores de los mensajes: los objetos pepe y moria, y medioTiempo.
+
+Dibujar un diagrama estático donde se vea la relación entre los objetos y los tipos polimórficos
+
+Encontrar (en toda la solución) un mensaje que sea una orden y otro que sea una consulta
+    orden:
+    (en vendedore)
+
+    method activarAumentoPorMuchasVentas() {
+        hayVentas = true
+    }
+
+    consulta: 
+    (en demagógico)
+
+    method importe(empleade){
+        return if (empleade.sueldoNeto() < 18000 ) montoPorNetoMín else montoPorNetoMáx
+    }
